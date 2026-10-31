@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Informatika Learning Hub — Karya Inovasi Akhmad Wahyu Redhani</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class'
+    };
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body class="min-h-screen flex flex-col">
+  
+  <header class="hub-nav sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-cyan-500 text-white font-extrabold flex items-center justify-center shadow-md">
+          ILH
+        </div>
+        <div>
+          <div class="font-extrabold text-sm sm:text-base leading-tight">Informatika Learning Hub</div>
+          <div class="text-[11px] opacity-75">SMKN 1 Banjarmasin • Fase E SMK</div>
+        </div>
+      </div>
+
+      <nav class="hidden lg:flex items-center gap-1" aria-label="Navigasi Utama">
+        <a href="index.html" class="hub-nav-item  px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition">🏠 1. Home</a><a href="materi.html" class="hub-nav-item  px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition">📚 2. Materi (3 Bab)</a><a href="video.html" class="hub-nav-item  px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition">🎬 3. Video Edukatif</a><a href="quiz.html" class="hub-nav-item active px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition">🎮 4. Quiz, Reward & Leaderboard</a>
+      </nav>
+
+      <div class="flex items-center gap-2">
+        <span id="active-student-label" class="hidden md:inline-flex px-3 py-1.5 rounded-xl hub-subtle text-xs font-semibold">Belum Login Siswa</span>
+        <span class="hidden sm:inline-flex px-3 py-1.5 rounded-xl bg-amber-500/15 text-amber-600 dark:text-amber-400 font-mono font-extrabold text-xs user-xp-display">
+          250 XP
+        </span>
+        <button type="button" onclick="toggleHubTheme()" class="px-3 py-2 rounded-xl hub-subtle hover:border-blue-500 text-xs font-bold transition flex items-center gap-1">
+          <span id="hub-theme-icon">🌙</span>
+          <span id="hub-theme-text" class="hidden sm:inline">Dark</span>
+        </button>
+        <button type="button" onclick="toggleHubMobileNav()" class="lg:hidden p-2 rounded-xl hub-subtle font-bold text-xs">
+          ☰ Menu
+        </button>
+      </div>
+    </div>
+
+    <div id="hub-mobile-drawer" class="hidden lg:hidden px-4 pb-4 pt-2 border-t border-slate-200 dark:border-slate-800 space-y-1">
+      <a href="index.html" class="hub-nav-item  block px-4 py-2.5 rounded-xl text-sm font-semibold transition">🏠 1. Home</a><a href="materi.html" class="hub-nav-item  block px-4 py-2.5 rounded-xl text-sm font-semibold transition">📚 2. Materi (3 Bab)</a><a href="video.html" class="hub-nav-item  block px-4 py-2.5 rounded-xl text-sm font-semibold transition">🎬 3. Video Edukatif</a><a href="quiz.html" class="hub-nav-item active block px-4 py-2.5 rounded-xl text-sm font-semibold transition">🎮 4. Quiz, Reward & Leaderboard</a>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- HALAMAN 4: QUIZ GAMIFIKASI, PENUKARAN REWARD DIGITAL, & LEADERBOARD SPREADSHEET -->
+    <div class="space-y-10">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400">Halaman 4 • Evaluasi Formatif &amp; Gamifikasi Kelas</span>
+          <h1 class="text-2xl sm:text-4xl font-extrabold mt-1">Quiz Gamifikasi, Reward Digital, &amp; Leaderboard</h1>
+          <p class="text-sm opacity-80 mt-1">Masukkan Nama dan Kelas Anda, kerjakan kuis 3 materi Informatika, tukarkan Poin XP dengan Reward Digital, dan raih posisi puncak di Leaderboard!</p>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <div class="px-4 py-2 rounded-xl bg-amber-500/15 text-amber-600 dark:text-amber-400 font-extrabold text-xs sm:text-sm flex items-center gap-2">
+            <span>⭐ Poin Anda:</span>
+            <span class="user-xp-display font-mono">250 XP</span>
+          </div>
+          <button type="button" onclick="openGasConfigModal()" class="px-4 py-2 rounded-xl hub-subtle hover:border-blue-500 text-xs font-bold transition">
+            ⚙️ Setup Database Spreadsheet
+          </button>
+        </div>
+      </div>
+
+      <!-- BAGIAN A: ARENA QUIZ GAMIFIKASI (REGISTRASI -> SOAL -> HASIL) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div class="lg:col-span-7">
+          <!-- 1. Kartu Input Data Nama & Kelas Siswa Sebelum Ikut Quiz -->
+          <div id="quiz-registration-card" class="hub-card rounded-3xl p-6 sm:p-8 space-y-5 border-t-4 border-t-blue-600">
+            <div class="flex items-center justify-between">
+              <span class="px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-xs font-bold uppercase">Langkah 1 • Identitas Peserta Quiz</span>
+              <span class="text-xs font-mono opacity-75">Umpan Balik Seketika (Instant Feedback)</span>
+            </div>
+            <h2 class="text-xl sm:text-2xl font-extrabold">Registrasi Siswa Sebelum Memulai Quiz</h2>
+            <p class="text-xs sm:text-sm opacity-80 leading-relaxed">
+              Data nama dan kelas yang Anda masukkan akan dicatat secara otomatis pada tabel <strong>Leaderboard</strong> dan digunakan untuk mencetak <strong>Sertifikat &amp; Reward Digital</strong>.
+            </p>
+
+            <div class="space-y-4">
+              <div>
+                <label for="quiz-input-nama" class="block text-xs font-bold uppercase tracking-wider mb-1.5">Nama Lengkap Siswa *</label>
+                <input id="quiz-input-nama" type="text" placeholder="Contoh: Muhammad Rizky Pratama" class="w-full px-4 py-3 rounded-xl hub-subtle text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label for="quiz-input-kelas" class="block text-xs font-bold uppercase tracking-wider mb-1.5">Pilih Kelas *</label>
+                  <select id="quiz-input-kelas" class="w-full px-4 py-3 rounded-xl hub-subtle text-sm font-semibold">
+                    <option value="X-B DKV">Kelas X-B DKV (SMKN 1 Banjarmasin)</option>
+                    <option value="X-C DKV">Kelas X-C DKV (SMKN 1 Banjarmasin)</option>
+                    <option value="X-A DKV">Kelas X-A DKV (SMKN 1 Banjarmasin)</option>
+                    <option value="X TJKT">Kelas X TJKT / PPLG</option>
+                    <option value="Umum / Tamu Seminar">Umum / Peserta Seminar PPG</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="quiz-input-bab" class="block text-xs font-bold uppercase tracking-wider mb-1.5">Paket Materi Quiz</label>
+                  <select id="quiz-input-bab" class="w-full px-4 py-3 rounded-xl hub-subtle text-sm font-semibold">
+                    <option value="all">🔥 Semua Bab (15 Soal Komprehensif)</option>
+                    <option value="bab1">🖥️ Bab 1: Sistem Komputer (5 Soal)</option>
+                    <option value="bab2">📊 Bab 2: Teknologi Informasi &amp; Komunikasi (5 Soal)</option>
+                    <option value="bab3">🛡️ Bab 3: Data, Informasi, &amp; Validasinya (5 Soal)</option>
+                  </select>
+                </div>
+              </div>
+
+              <button type="button" onclick="startGamifiedQuiz()" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-extrabold text-sm sm:text-base shadow-xl transition">
+                🚀 Mulai Kerjakan Quiz Sekarang
+              </button>
+            </div>
+          </div>
+
+          <!-- 2. Kartu Arena Pengerjaan Soal Quiz -->
+          <div id="quiz-arena-card" class="hidden hub-card rounded-3xl p-6 sm:p-8 space-y-5 border-t-4 border-t-cyan-500">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <span id="quiz-bab-badge" class="px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-xs font-bold">Bab 1</span>
+              <div class="flex items-center gap-3">
+                <span id="quiz-streak-badge" class="px-3 py-1 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-400 text-xs font-extrabold">🔥 Streak: 0x</span>
+                <span id="quiz-progress-text" class="text-xs font-mono font-bold opacity-75">Soal 1 dari 15</span>
+              </div>
+            </div>
+
+            <div class="w-full h-2.5 rounded-full hub-subtle overflow-hidden">
+              <div id="quiz-progress-bar" class="h-full bg-gradient-to-r from-blue-600 to-cyan-500 transition-all duration-300" style="width: 10%"></div>
+            </div>
+
+            <h3 id="quiz-question-text" class="text-lg sm:text-xl font-extrabold leading-snug pt-1"></h3>
+
+            <div id="quiz-options-list" class="space-y-3"></div>
+
+            <div id="quiz-feedback-box" class="hidden"></div>
+
+            <div class="flex justify-end pt-2">
+              <button type="button" id="quiz-next-btn" onclick="nextQuizQuestion()" class="hidden px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs sm:text-sm shadow-lg transition">
+                Soal Selanjutnya →
+              </button>
+            </div>
+          </div>
+
+          <!-- 3. Kartu Hasil Akhir Quiz -->
+          <div id="quiz-result-card" class="hidden hub-card rounded-3xl p-6 sm:p-8 text-center space-y-5 border-t-4 border-t-emerald-500">
+            <div class="text-5xl">🏆</div>
+            <div class="text-xs font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">Quiz Selesai • Skor Tercatat di Leaderboard</div>
+            <h3 id="res-student-name" class="text-xl font-extrabold"></h3>
+
+            <div class="grid grid-cols-3 gap-3 max-w-md mx-auto">
+              <div class="p-4 rounded-2xl hub-subtle">
+                <div class="text-[11px] opacity-75 uppercase font-bold">Nilai Akhir</div>
+                <div id="res-final-score" class="text-2xl sm:text-3xl font-extrabold text-blue-600 dark:text-blue-400 mt-1">100</div>
+              </div>
+              <div class="p-4 rounded-2xl hub-subtle">
+                <div class="text-[11px] opacity-75 uppercase font-bold">Ketepatan</div>
+                <div id="res-correct-ratio" class="text-xs sm:text-sm font-extrabold mt-2">15/15</div>
+              </div>
+              <div class="p-4 rounded-2xl hub-subtle">
+                <div class="text-[11px] opacity-75 uppercase font-bold">Poin Diraih</div>
+                <div id="res-xp-earned" class="text-base sm:text-lg font-extrabold text-amber-500 mt-1.5">+500 XP</div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-3 pt-2">
+              <button type="button" onclick="resetQuizToStart()" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm transition">
+                🔄 Coba Lagi / Ganti Paket Bab
+              </button>
+              <button type="button" onclick="claimDigitalReward('cert-kompetensi')" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-xs sm:text-sm transition">
+                🏅 Klaim Sertifikat Kompetensi Digital
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- BAGIAN B: TOKO PENUKARAN REWARD DIGITAL -->
+        <div class="lg:col-span-5 space-y-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <span class="text-xs font-bold uppercase text-amber-600 dark:text-amber-400">🎁 Toko Penukaran Poin</span>
+              <h3 class="text-xl font-extrabold">Reward Digital Siswa</h3>
+            </div>
+            <span class="px-3 py-1 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-400 text-xs font-extrabold user-xp-display">250 XP</span>
+          </div>
+          <div id="rewards-shop-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+        </div>
+      </div>
+
+      <!-- BAGIAN C: PAPAN PERINGKAT LEADERBOARD (TERHUBUNG GOOGLE SPREADSHEET & APPS SCRIPT) -->
+      <div class="hub-card rounded-3xl p-6 sm:p-8 space-y-5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="text-xl sm:text-2xl font-extrabold">🏆 Papan Peringkat (Leaderboard) Kelas</h2>
+              <span id="db-connection-badge" class="px-3 py-1 rounded-full bg-blue-500/15 text-blue-600 dark:text-blue-400 text-xs font-bold">Mode Demo Kelas X DKV</span>
+            </div>
+            <p class="text-xs opacity-75 mt-1">Data peringkat diurutkan secara otomatis berdasarkan Skor Tertinggi dan akumulasi Poin XP.</p>
+          </div>
+          <div class="flex gap-2">
+            <button type="button" onclick="loadLeaderboardData()" class="px-4 py-2 rounded-xl hub-subtle hover:border-blue-500 text-xs font-bold transition">
+              🔄 Refresh Data
+            </button>
+            <button type="button" onclick="openGasConfigModal()" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition">
+              🔗 Hubungkan Google Spreadsheet
+            </button>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="border-b-2 border-slate-200 dark:border-slate-700 text-xs uppercase tracking-wider opacity-75">
+                <th class="p-3.5">Peringkat</th>
+                <th class="p-3.5">Nama Siswa</th>
+                <th class="p-3.5">Kelas</th>
+                <th class="p-3.5">Kategori Materi</th>
+                <th class="p-3.5">Skor</th>
+                <th class="p-3.5">Total Poin</th>
+                <th class="p-3.5">Reward Diklaim</th>
+              </tr>
+            </thead>
+            <tbody id="leaderboard-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    
+  </main>
+
+  <!-- Modal Reward Digital / Sertifikat -->
+  <div id="reward-preview-modal" class="hidden fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="hub-card rounded-3xl max-w-2xl w-full p-6 sm:p-8 space-y-5 shadow-2xl">
+      <div class="flex items-center justify-between">
+        <span class="text-xs font-bold uppercase tracking-wider text-amber-500">🎁 Bukti Klaim Reward Digital</span>
+        <button type="button" onclick="closeRewardPreview()" class="px-3 py-1 rounded-xl hub-subtle font-bold text-xs">✕ Tutup</button>
+      </div>
+      <div id="reward-modal-content"></div>
+      <div class="flex justify-end gap-2">
+        <button type="button" onclick="window.print()" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs">🖨️ Cetak / Simpan PDF</button>
+        <button type="button" onclick="closeRewardPreview()" class="px-4 py-2 rounded-xl hub-subtle font-bold text-xs">Selesai</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Setup Google Spreadsheet & Google Apps Script -->
+  <div id="gas-config-modal" class="hidden fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="hub-card rounded-3xl max-w-xl w-full p-6 sm:p-8 space-y-4 shadow-2xl border-t-4 border-t-blue-600">
+      <div class="flex items-center justify-between">
+        <span class="px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-xs font-bold uppercase">Integrasi Database Google Spreadsheet</span>
+        <button type="button" onclick="closeGasConfigModal()" class="text-sm font-bold opacity-70">✕</button>
+      </div>
+      <h3 class="text-lg sm:text-xl font-extrabold">Hubungkan Leaderboard ke Google Apps Script</h3>
+      <p class="text-xs opacity-85 leading-relaxed">
+        Tempelkan <strong>Web App URL</strong> dari Google Apps Script Anda (berakhiran <code>/exec</code>). Kode lengkap <code>Code.gs</code> sudah disertakan di dalam folder <code>google-apps-script/Code.gs</code> dan dijelaskan langkah demi langkah pada dokumen Word Panduan Deploy.
+      </p>
+      <div>
+        <label for="gas-url-input" class="block text-xs font-bold uppercase mb-1">URL Web App Google Apps Script:</label>
+        <input id="gas-url-input" type="url" placeholder="https://script.google.com/macros/s/AKfycb.../exec" class="w-full px-3.5 py-2.5 rounded-xl hub-subtle text-xs font-mono" />
+      </div>
+      <div class="flex justify-end gap-2 pt-2">
+        <button type="button" onclick="closeGasConfigModal()" class="px-4 py-2 rounded-xl hub-subtle text-xs font-bold">Batal</button>
+        <button type="button" onclick="saveGasUrlConfig()" class="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold">💾 Simpan &amp; Sinkronkan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="hub-toast" class="hidden fixed bottom-5 right-5 z-50 px-5 py-3 rounded-2xl bg-slate-900 text-white text-xs sm:text-sm font-semibold shadow-2xl border border-slate-700 flex items-center gap-2">
+    <span>⚡</span>
+    <span id="hub-toast-text">Info</span>
+  </div>
+
+  <footer class="border-t border-slate-200 dark:border-slate-800 py-6 mt-12 text-center text-xs opacity-75">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div><strong>Informatika Learning Hub</strong> • Karya Inovasi Akhmad Wahyu Redhani (NIM 2530111713968)</div>
+      <div>PPG Calon Guru Informatika ULM • PPL SMKN 1 Banjarmasin • 2026</div>
+    </div>
+  </footer>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
