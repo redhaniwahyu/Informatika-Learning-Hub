@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Informatika Learning Hub — Karya Inovasi Akhmad Wahyu Redhani</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class'
+    };
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body class="min-h-screen flex flex-col">
+  
+  <header class="hub-nav sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-cyan-500 text-white font-extrabold flex items-center justify-center shadow-md">
+          ILH
+        </div>
+        <div>
+          <div class="font-extrabold text-sm sm:text-base leading-tight">Informatika Learning Hub</div>
+          <div class="text-[11px] opacity-75">SMKN 1 Banjarmasin • Fase E SMK</div>
+        </div>
+      </div>
+
+      <nav class="hidden lg:flex items-center gap-1" aria-label="Navigasi Utama">
+        <a href="index.html" class="hub-nav-item  px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition">🏠 1. Home</a><a href="materi.html" class="hub-nav-item  px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition">📚 2. Materi (3 Bab)</a><a href="video.html" class="hub-nav-item active px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition">🎬 3. Video Edukatif</a><a href="quiz.html" class="hub-nav-item  px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition">🎮 4. Quiz, Reward & Leaderboard</a>
+      </nav>
+
+      <div class="flex items-center gap-2">
+        <span id="active-student-label" class="hidden md:inline-flex px-3 py-1.5 rounded-xl hub-subtle text-xs font-semibold">Belum Login Siswa</span>
+        <span class="hidden sm:inline-flex px-3 py-1.5 rounded-xl bg-amber-500/15 text-amber-600 dark:text-amber-400 font-mono font-extrabold text-xs user-xp-display">
+          250 XP
+        </span>
+        <button type="button" onclick="toggleHubTheme()" class="px-3 py-2 rounded-xl hub-subtle hover:border-blue-500 text-xs font-bold transition flex items-center gap-1">
+          <span id="hub-theme-icon">🌙</span>
+          <span id="hub-theme-text" class="hidden sm:inline">Dark</span>
+        </button>
+        <button type="button" onclick="toggleHubMobileNav()" class="lg:hidden p-2 rounded-xl hub-subtle font-bold text-xs">
+          ☰ Menu
+        </button>
+      </div>
+    </div>
+
+    <div id="hub-mobile-drawer" class="hidden lg:hidden px-4 pb-4 pt-2 border-t border-slate-200 dark:border-slate-800 space-y-1">
+      <a href="index.html" class="hub-nav-item  block px-4 py-2.5 rounded-xl text-sm font-semibold transition">🏠 1. Home</a><a href="materi.html" class="hub-nav-item  block px-4 py-2.5 rounded-xl text-sm font-semibold transition">📚 2. Materi (3 Bab)</a><a href="video.html" class="hub-nav-item active block px-4 py-2.5 rounded-xl text-sm font-semibold transition">🎬 3. Video Edukatif</a><a href="quiz.html" class="hub-nav-item  block px-4 py-2.5 rounded-xl text-sm font-semibold transition">🎮 4. Quiz, Reward & Leaderboard</a>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- HALAMAN 3: VIDEO EDUKATIF MENARIK BEBAS DISTRAKSI -->
+    <div class="space-y-8">
+      <div>
+        <span class="text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400">Halaman 3 • Penguatan Audiovisual Terkurasi</span>
+        <h1 class="text-2xl sm:text-4xl font-extrabold mt-1">Video Edukatif Informatika</h1>
+        <p class="text-sm opacity-80 mt-1">Dirancang berdasarkan <em>Cognitive Theory of Multimedia Learning</em> (Mayer) untuk membantu visualisasi konsep abstrak tanpa gangguan iklan dan algoritma hiburan luar.</p>
+      </div>
+
+      <!-- Pemilih 3 Video Materi -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <button type="button" data-vid="vid-bab1" onclick="selectVideoLesson('vid-bab1')" class="video-playlist-btn hub-card rounded-2xl p-4 text-left space-y-1 transition">
+          <div class="text-xs font-bold text-blue-600 dark:text-blue-400">🎬 VIDEO 01 • SISTEM KOMPUTER</div>
+          <div class="font-extrabold text-sm">Arsitektur CPU &amp; Siklus Fetch-Decode-Execute</div>
+          <div class="text-[11px] opacity-70">Durasi: 06:15 Menit • +20 XP</div>
+        </button>
+        <button type="button" data-vid="vid-bab2" onclick="selectVideoLesson('vid-bab2')" class="video-playlist-btn hub-card rounded-2xl p-4 text-left space-y-1 transition">
+          <div class="text-xs font-bold text-cyan-600 dark:text-cyan-400">🎬 VIDEO 02 • TIK &amp; SPREADSHEET</div>
+          <div class="font-extrabold text-sm">Analisis Data Hidrologi Waduk Riam Kanan</div>
+          <div class="text-[11px] opacity-70">Durasi: 07:10 Menit • +20 XP</div>
+        </button>
+        <button type="button" data-vid="vid-bab3" onclick="selectVideoLesson('vid-bab3')" class="video-playlist-btn hub-card rounded-2xl p-4 text-left space-y-1 ring-2 ring-blue-500 transition">
+          <div class="text-xs font-bold text-emerald-600 dark:text-emerald-400">🎬 VIDEO 03 • DATA &amp; VALIDASI</div>
+          <div class="font-extrabold text-sm">Transformasi Data &amp; 5 Teknik Validasi Digital</div>
+          <div class="text-[11px] opacity-70">Durasi: 05:45 Menit • +20 XP</div>
+        </button>
+      </div>
+
+      <!-- Layar Utama Pemutar Simulasi Video Interaktif -->
+      <div class="hub-card rounded-3xl overflow-hidden shadow-xl">
+        <div class="bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 p-6 sm:p-10 text-white relative">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-6">
+            <span id="stage-anim-badge" class="px-3 py-1 rounded-full bg-cyan-500/20 border border-cyan-400/30 text-cyan-300 text-xs font-mono font-bold">
+              Bab 3 • Data, Informasi, dan Validasinya — Segmen 01 / 04
+            </span>
+            <span id="video-main-duration" class="text-xs text-slate-300 font-mono">⏱️ 05:45 Menit • Bebas Iklan</span>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center py-4">
+            <div class="lg:col-span-7 space-y-4">
+              <h2 id="stage-anim-title" class="text-2xl sm:text-3xl font-extrabold text-cyan-300">
+                Fakta Mentah vs Informasi Kontekstual
+              </h2>
+              <p id="stage-anim-desc" class="text-sm sm:text-base text-slate-200 leading-relaxed">
+                Membedakan deretan angka mentah dengan informasi terstruktur yang siap mendukung keputusan.
+              </p>
+              <div class="pt-2 flex flex-wrap gap-3">
+                <button type="button" id="btn-play-vid" onclick="playInteractiveVideo()" class="px-5 py-2.5 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-extrabold text-xs sm:text-sm transition shadow-lg">
+                  ▶️ Putar Simulasi Video Interaktif
+                </button>
+                <button type="button" onclick="nextVideoStep()" class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm border border-white/20 transition">
+                  ⏭️ Segmen Berikutnya
+                </button>
+              </div>
+            </div>
+            <div class="lg:col-span-5 space-y-2">
+              <div class="rounded-2xl overflow-hidden border-2 border-cyan-400/40 shadow-2xl bg-black">
+                <video id="main-mp4-player" controls preload="metadata" poster="assets/img/wetland_data.jpg" onended="onMp4Ended()" class="w-full h-56 sm:h-64 object-contain bg-slate-950">
+                  <source src="assets/video/video_pembelajaran_informatika.mp4" type="video/mp4" />
+                  Browser Anda tidak mendukung pemutar video HTML5 MP4.
+                </video>
+              </div>
+              <div class="flex flex-wrap items-center justify-between gap-2 text-[11px] text-cyan-200 px-1">
+                <span>📹 File: <code>assets/video/video_pembelajaran_informatika.mp4</code></span>
+                <div class="flex gap-1.5">
+                  <button type="button" onclick="seekMp4Video(0)" class="px-2 py-0.5 rounded bg-white/10 hover:bg-white/20">00:00 Intro</button>
+                  <button type="button" onclick="seekMp4Video(3)" class="px-2 py-0.5 rounded bg-white/10 hover:bg-white/20">00:03 Bab 1</button>
+                  <button type="button" onclick="seekMp4Video(6)" class="px-2 py-0.5 rounded bg-white/10 hover:bg-white/20">00:06 Bab 2</button>
+                  <button type="button" onclick="seekMp4Video(9)" class="px-2 py-0.5 rounded bg-white/10 hover:bg-white/20">00:09 Bab 3</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Progress Bar Video -->
+          <div class="mt-6 w-full h-2 rounded-full bg-slate-800 overflow-hidden">
+            <div id="stage-progress-bar" class="h-full bg-gradient-to-r from-cyan-400 to-blue-500 transition-all duration-500" style="width: 25%"></div>
+          </div>
+        </div>
+
+        <!-- Deskripsi & 4 Segmen Poin Penting Video -->
+        <div class="p-6 sm:p-8 space-y-5">
+          <div>
+            <span id="video-main-bab" class="text-xs font-bold uppercase text-blue-600 dark:text-blue-400">Bab 3 • Data, Informasi, dan Validasinya</span>
+            <h3 id="video-main-title" class="text-xl font-extrabold mt-0.5">Bab 3: Transformasi Data Menjadi Informasi &amp; 5 Teknik Validasi Data Digital</h3>
+            <p id="video-main-summary" class="text-xs sm:text-sm opacity-80 mt-1 leading-relaxed">
+              Penjelasan animasi mengenai perbedaan fakta mentah (Data) dengan Informasi bermakna, bahaya Garbage In Garbage Out (GIGO), serta praktik memasang Data Validation pada formulir dan spreadsheet.
+            </p>
+          </div>
+
+          <div class="space-y-2">
+            <div class="text-xs font-bold uppercase tracking-wider opacity-75">4 Segmen Pembahasan dalam Video (Klik Putar di Atas):</div>
+            <div id="video-steps-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </main>
+
+  <!-- Modal Reward Digital / Sertifikat -->
+  <div id="reward-preview-modal" class="hidden fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="hub-card rounded-3xl max-w-2xl w-full p-6 sm:p-8 space-y-5 shadow-2xl">
+      <div class="flex items-center justify-between">
+        <span class="text-xs font-bold uppercase tracking-wider text-amber-500">🎁 Bukti Klaim Reward Digital</span>
+        <button type="button" onclick="closeRewardPreview()" class="px-3 py-1 rounded-xl hub-subtle font-bold text-xs">✕ Tutup</button>
+      </div>
+      <div id="reward-modal-content"></div>
+      <div class="flex justify-end gap-2">
+        <button type="button" onclick="window.print()" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs">🖨️ Cetak / Simpan PDF</button>
+        <button type="button" onclick="closeRewardPreview()" class="px-4 py-2 rounded-xl hub-subtle font-bold text-xs">Selesai</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Setup Google Spreadsheet & Google Apps Script -->
+  <div id="gas-config-modal" class="hidden fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="hub-card rounded-3xl max-w-xl w-full p-6 sm:p-8 space-y-4 shadow-2xl border-t-4 border-t-blue-600">
+      <div class="flex items-center justify-between">
+        <span class="px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-xs font-bold uppercase">Integrasi Database Google Spreadsheet</span>
+        <button type="button" onclick="closeGasConfigModal()" class="text-sm font-bold opacity-70">✕</button>
+      </div>
+      <h3 class="text-lg sm:text-xl font-extrabold">Hubungkan Leaderboard ke Google Apps Script</h3>
+      <p class="text-xs opacity-85 leading-relaxed">
+        Tempelkan <strong>Web App URL</strong> dari Google Apps Script Anda (berakhiran <code>/exec</code>). Kode lengkap <code>Code.gs</code> sudah disertakan di dalam folder <code>google-apps-script/Code.gs</code> dan dijelaskan langkah demi langkah pada dokumen Word Panduan Deploy.
+      </p>
+      <div>
+        <label for="gas-url-input" class="block text-xs font-bold uppercase mb-1">URL Web App Google Apps Script:</label>
+        <input id="gas-url-input" type="url" placeholder="https://script.google.com/macros/s/AKfycb.../exec" class="w-full px-3.5 py-2.5 rounded-xl hub-subtle text-xs font-mono" />
+      </div>
+      <div class="flex justify-end gap-2 pt-2">
+        <button type="button" onclick="closeGasConfigModal()" class="px-4 py-2 rounded-xl hub-subtle text-xs font-bold">Batal</button>
+        <button type="button" onclick="saveGasUrlConfig()" class="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold">💾 Simpan &amp; Sinkronkan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="hub-toast" class="hidden fixed bottom-5 right-5 z-50 px-5 py-3 rounded-2xl bg-slate-900 text-white text-xs sm:text-sm font-semibold shadow-2xl border border-slate-700 flex items-center gap-2">
+    <span>⚡</span>
+    <span id="hub-toast-text">Info</span>
+  </div>
+
+  <footer class="border-t border-slate-200 dark:border-slate-800 py-6 mt-12 text-center text-xs opacity-75">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div><strong>Informatika Learning Hub</strong> • Karya Inovasi Akhmad Wahyu Redhani (NIM 2530111713968)</div>
+      <div>PPG Calon Guru Informatika ULM • PPL SMKN 1 Banjarmasin • 2026</div>
+    </div>
+  </footer>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
