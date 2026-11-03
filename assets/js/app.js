@@ -6,7 +6,7 @@
 // ============================================================
 // KONFIGURASI
 // ============================================================
-let GAS_WEB_APP_URL = '';
+let GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxtaU8Z08nxvBCZUQ0rGEV6SI-Uh0QOxIRUniFadTVXOLMsMQuNlYFkYIT6-0Y-WDTK/exec';
 
 // ✅ OPSIONAL: Token anti-spam (samakan dengan SECRET_TOKEN di Code.gs)
 // Biarkan kosong ('') jika tidak pakai token
