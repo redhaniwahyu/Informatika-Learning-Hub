@@ -5,21 +5,14 @@
  * PPG Calon Guru Informatika — Universitas Lambung Mangkurat (ULM)
  * Sekolah PPL: SMKN 1 Banjarmasin
  * ============================================================================
- * CARA PAKAI:
- * 1. Buat Google Spreadsheet baru di Google Drive Anda.
- * 2. Beri nama sheet pertama: Leaderboard
- * 3. Buat header pada Baris 1 (A1:G1):
- *    A1: Timestamp | B1: Nama | C1: Kelas | D1: Kategori_Bab | E1: Skor | F1: Poin_XP | G1: Reward_Klaim
- * 4. Klik menu Extensions (Ekstensi) -> Apps Script.
- * 5. Hapus seluruh isi Code.gs, lalu tempel (paste) seluruh kode ini.
- * 6. Klik tombol Deploy -> New deployment -> Pilih jenis: Web app.
- * 7. Pada "Execute as" pilih: Me (Email Anda).
- * 8. Pada "Who has access" pilih: Anyone (Siapa saja).
- * 9. Klik Deploy, salin Web App URL (berakhiran /exec), lalu tempelkan pada
- *    konfigurasi GAS_WEB_APP_URL di file assets/js/app.js (atau via tombol Setup Database di web).
  */
 
 const SHEET_NAME = 'Leaderboard';
+
+// ✅ OPSIONAL: Token rahasia untuk mencegah spam POST
+// Biarkan kosong ('') jika tidak ingin pakai token
+// Jika diisi, samakan dengan GAS_SECRET_TOKEN di app.js
+const SECRET_TOKEN = '';
 
 function setupSheet() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -52,19 +45,22 @@ function doGet(e) {
         reward: String(r[6] || '-')
       });
     }
-    // Urutkan berdasarkan Skor tertinggi, lalu Poin_XP tertinggi
     data.sort((a, b) => (b.skor - a.skor) || (b.poin - a.poin));
 
-    return ContentService.createTextOutput(JSON.stringify({
-      status: 'success',
-      count: data.length,
-      leaderboard: data.slice(0, 50)
-    })).setMimeType(ContentService.MimeType.JSON);
+    return ContentService
+      .createTextOutput(JSON.stringify({
+        status: 'success',
+        count: data.length,
+        leaderboard: data.slice(0, 50)
+      }))
+      .setMimeType(ContentService.MimeType.JSON);
   } catch (err) {
-    return ContentService.createTextOutput(JSON.stringify({
-      status: 'error',
-      message: err.toString()
-    })).setMimeType(ContentService.MimeType.JSON);
+    return ContentService
+      .createTextOutput(JSON.stringify({
+        status: 'error',
+        message: err.toString()
+      }))
+      .setMimeType(ContentService.MimeType.JSON);
   }
 }
 
@@ -72,30 +68,50 @@ function doPost(e) {
   try {
     const sheet = setupSheet();
     let payload = {};
+
     if (e.postData && e.postData.contents) {
-      payload = JSON.parse(e.postData.contents);
+      const raw = e.postData.contents;
+      try {
+        payload = JSON.parse(raw);
+      } catch (_) {
+        payload = e.parameter || {};
+      }
     } else if (e.parameter) {
       payload = e.parameter;
     }
 
+    // ✅ Validasi token (jika diaktifkan)
+    if (SECRET_TOKEN && payload.token !== SECRET_TOKEN) {
+      return ContentService
+        .createTextOutput(JSON.stringify({
+          status: 'error',
+          message: 'Unauthorized: token tidak valid'
+        }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+
     const timestamp = new Date().toLocaleString('id-ID', { timeZone: 'Asia/Makassar' });
-    const nama = payload.nama || 'Siswa Anonim';
-    const kelas = payload.kelas || 'X-B DKV';
-    const bab = payload.bab || 'Semua Bab (3 Materi)';
+    const nama = String(payload.nama || 'Siswa Anonim').slice(0, 100);
+    const kelas = String(payload.kelas || 'X-B DKV').slice(0, 50);
+    const bab = String(payload.bab || 'Semua Bab (3 Materi)').slice(0, 100);
     const skor = Number(payload.skor || 0);
     const poin = Number(payload.poin || 0);
-    const reward = payload.reward || '-';
+    const reward = String(payload.reward || '-').slice(0, 200);
 
     sheet.appendRow([timestamp, nama, kelas, bab, skor, poin, reward]);
 
-    return ContentService.createTextOutput(JSON.stringify({
-      status: 'success',
-      message: 'Skor berhasil disimpan ke Google Spreadsheet!'
-    })).setMimeType(ContentService.MimeType.JSON);
+    return ContentService
+      .createTextOutput(JSON.stringify({
+        status: 'success',
+        message: 'Skor berhasil disimpan ke Google Spreadsheet!'
+      }))
+      .setMimeType(ContentService.MimeType.JSON);
   } catch (err) {
-    return ContentService.createTextOutput(JSON.stringify({
-      status: 'error',
-      message: err.toString()
-    })).setMimeType(ContentService.MimeType.JSON);
+    return ContentService
+      .createTextOutput(JSON.stringify({
+        status: 'error',
+        message: err.toString()
+      }))
+      .setMimeType(ContentService.MimeType.JSON);
   }
 }
